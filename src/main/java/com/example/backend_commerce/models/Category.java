@@ -21,22 +21,22 @@ public class Category {
     @Column(name = "handle" ,nullable = false, unique = true, length = 1000)
     private String handle;
 
-    @Column(name = "title", nullable = false, length = 200)
+    @Column(name = "title", nullable = false, length = 250)
     private String title;
 
-    @Column(name = "description" ,nullable = true, length = 10000)
+    @Column(name = "description", length = 100000)
     private String description;
 
     @Column(name = "image")
     private String image;
 
     @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Time created_at;
+    private String created_at;
 
     @Column(name = "updated_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Time updated_at;
+    private String updated_at;
 
-    public Category(long id, String handle, String title, String description, String image, Time created_at, Time updated_at) {
+    public Category(long id, String handle, String title, String description, String image, String created_at, String updated_at) {
         this.id = id;
         this.handle = handle;
         this.title = title;
