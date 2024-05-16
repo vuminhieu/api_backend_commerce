@@ -1,5 +1,6 @@
 package com.example.backend_commerce.controllers;
 
+import com.example.backend_commerce.dto.CategoryDTO;
 import com.example.backend_commerce.models.Category;
 import com.example.backend_commerce.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,31 +18,29 @@ public class CategoriesController {
     @Autowired
     private CategoryService categoryService;
 
+//    @GetMapping("{id}")
+//    public ResponseEntity<Category> getCategory(@PathVariable Long id) {
+//        Optional<Category> category = categoryService.findCategoryById(id);
+//        if (category.isPresent()) {
+//            return ResponseEntity.ok(category.get());
+//        }
+//        else {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+//        }
+//    }
     @GetMapping("{id}")
-    public ResponseEntity<Category> getCategory(@PathVariable Long id) {
-        Optional<Category> category = categoryService.findCategoryById(id);
-        if (category.isPresent()) {
-            return ResponseEntity.ok(category.get());
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    public CategoryDTO getCategory(@PathVariable Long id) {
+        return categoryService.findCategoryDTOById(id);
     }
 
     @GetMapping("")
-    public List<Category> getCategories() {
-        return categoryService.findAll();
+    public List<CategoryDTO> getCategories() {
+        return categoryService.getALLCategoryDTO();
     }
 
     @PostMapping("")
-    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
-        System.out.println(category);
-
-        String result = categoryService.insert(category);
-        if (result.startsWith("error")) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-        return ResponseEntity.status(HttpStatus.CREATED).body(category);
+    public String createCategory(@RequestBody CategoryDTO categoryDTO) {
+        return categoryService.insert(categoryDTO);
     }
 
     @DeleteMapping("{id}")
