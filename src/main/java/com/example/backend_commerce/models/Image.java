@@ -14,11 +14,16 @@ public class Image {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
-//    private long product_id;
 
+    // map categories to images
     @ManyToOne(optional = true)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    // map products to images
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     public Image() {
     }
@@ -36,6 +41,8 @@ public class Image {
 
     @Column(name = "position")
     private Integer position;
+
+
 
     @Column(name = "width")
     private double width;

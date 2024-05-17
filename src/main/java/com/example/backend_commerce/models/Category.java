@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Time;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -30,6 +31,9 @@ public class Category {
     @OneToMany(mappedBy = "category")
     @JsonIgnore
     private List<Image> images;
+
+    @ManyToMany(mappedBy = "categories")
+    private Set<Product> products =  new HashSet<>();
 
     @Column(name = "description", length = 100000)
     private String description;
