@@ -10,6 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,13 +28,13 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
     private final static String SecretKey = "123";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-
             try {
                 String token = authorizationHeader.substring("Bearer ".length());
                 Algorithm algorithm = Algorithm.HMAC256(SecretKey.getBytes());
@@ -48,6 +49,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 });
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                filterChain.doFilter(request, response);
             } catch (Exception e) {
                 response.setHeader("error", e.getMessage());
                 response.setStatus(FORBIDDEN.value());
@@ -56,9 +58,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 response.setContentType(APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), error);
             }
-        }
-        else {
-            filterChain.doFilter(request, response);
         }
 
     }
