@@ -52,7 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 });
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-                filterChain.doFilter(request, response);
+//                filterChain.doFilter(request, response);
             } catch (Exception e) {
                 response.setHeader("error", e.getMessage());
                 response.setStatus(FORBIDDEN.value());

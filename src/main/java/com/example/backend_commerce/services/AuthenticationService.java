@@ -7,6 +7,7 @@ import com.example.backend_commerce.models.User;
 import com.example.backend_commerce.repositories.RoleCustomRepository;
 import com.example.backend_commerce.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,9 +21,16 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
+    @Autowired
     private final UserRepository userRepository;
+
+    @Autowired
     private final AuthenticationManager authenticationManager;
+
+    @Autowired
     private final RoleCustomRepository roleCustomRepository;
+
+    @Autowired
     private  final JwtService jwtService;
 
 

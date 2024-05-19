@@ -16,12 +16,11 @@ import java.util.stream.Collectors;
 public class JwtService {
     private final static String SecretKey = "123";
 
-
     public String generateToken(User user, Collection<SimpleGrantedAuthority> authorities) {
         Algorithm algorithm = Algorithm.HMAC256(SecretKey.getBytes());
         return JWT.create()
                 .withSubject(user.getEmail())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 50 * 60 * 1000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 60 * 1000))
                 .withClaim("roles", authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
     }
@@ -30,7 +29,7 @@ public class JwtService {
         Algorithm algorithm = Algorithm.HMAC256(SecretKey.getBytes());
         return JWT.create()
                 .withSubject(user.getEmail())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 70 * 70 * 1000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 360 * 60 * 1000))
                 .withClaim("roles", authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
     }
