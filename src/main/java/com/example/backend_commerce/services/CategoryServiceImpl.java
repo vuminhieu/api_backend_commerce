@@ -6,13 +6,16 @@ import com.example.backend_commerce.models.Category;
 import com.example.backend_commerce.models.Image;
 import com.example.backend_commerce.repositories.CategoryRepository;
 import com.example.backend_commerce.repositories.ImageRepository;
+import com.example.backend_commerce.ultils.HandlesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,36 +35,67 @@ public class CategoryServiceImpl implements CategoryService {
 
         return categoryRepo.findById(id);
     }
+    private CategoryDTO convertFindByIdDTO(Category category) {
+        CategoryDTO categoryDTO = new CategoryDTO();
+        categoryDTO.setId(category.getId());
+        categoryDTO.setHandle(category.getHandle());
+        categoryDTO.setTitle(category.getTitle());
+        categoryDTO.setDescription(category.getDescription());
+        categoryDTO.setCreated_at(category.getCreated_at());
+        categoryDTO.setUpdated_at(category.getUpdated_at());
+
+        List<ImageDTO> imageDTOs = category.getImages().stream().map(image -> {
+            ImageDTO imageDTO = new ImageDTO();
+            imageDTO.setId(image.getId());
+            imageDTO.setSrc(image.getSrc());
+            imageDTO.setHeight(image.getHeight());
+            imageDTO.setWidth(image.getWidth());
+            imageDTO.setCreated_at(image.getCreated_at());
+            imageDTO.setUpdated_at(image.getUpdated_at());
+            return imageDTO;
+        }).collect(Collectors.toList());
+
+        categoryDTO.setImages(imageDTOs);
+        return categoryDTO;
+    }
 
     @Override
     public CategoryDTO findCategoryDTOById(Long id) {
         Optional<Category> categoryOpt = categoryRepo.findById(id);
+//        return categoryOpt.map(this::convertFindByIdDTO).orElse(null);
         if (categoryOpt.isPresent()) {
-            Category category = categoryOpt.get();
-            CategoryDTO categoryDTO = new CategoryDTO();
-            categoryDTO.setId(category.getId());
-            categoryDTO.setHandle(category.getHandle());
-            categoryDTO.setTitle(category.getTitle());
-            categoryDTO.setDescription(category.getDescription());
-            categoryDTO.setCreated_at(category.getCreated_at());
-            categoryDTO.setUpdated_at(category.getUpdated_at());
-
-            List<ImageDTO> imageDTOs = category.getImages().stream().map(image -> {
-                ImageDTO imageDTO = new ImageDTO();
-                imageDTO.setId(image.getId());
-                imageDTO.setSrc(image.getSrc());
-                imageDTO.setHeight(image.getHeight());
-                imageDTO.setWidth(image.getWidth());
-                imageDTO.setCreated_at(image.getCreated_at());
-                imageDTO.setUpdated_at(image.getUpdated_at());
-                return imageDTO;
-            }).collect(Collectors.toList());
-
-            categoryDTO.setImages(imageDTOs);
-
-            return categoryDTO;
+            return convertFindByIdDTO(categoryOpt.get());
         }
         return null;
+//        if (categoryOpt.isPresent()) {
+//            Category category = categoryOpt.get();
+//            CategoryDTO categoryDTO = new CategoryDTO();
+//
+//            // Set category properties
+//            categoryDTO.setId(category.getId());
+//            categoryDTO.setHandle(category.getHandle());
+//            categoryDTO.setTitle(category.getTitle());
+//            categoryDTO.setDescription(category.getDescription());
+//            categoryDTO.setCreated_at(category.getCreated_at());
+//            categoryDTO.setUpdated_at(category.getUpdated_at());
+//
+//            // Map images to ImageDTOs
+//            List<ImageDTO> imageDTOs = category.getImages().stream().map(image -> {
+//                ImageDTO imageDTO = new ImageDTO();
+//                imageDTO.setId(image.getId());
+//                imageDTO.setSrc(image.getSrc());
+//                imageDTO.setHeight(image.getHeight());
+//                imageDTO.setWidth(image.getWidth());
+//                imageDTO.setCreated_at(image.getCreated_at());
+//                imageDTO.setUpdated_at(image.getUpdated_at());
+//                return imageDTO;
+//            }).collect(Collectors.toList());
+//
+//            categoryDTO.setImages(imageDTOs);
+//
+//            return categoryDTO;
+//        }
+//        return null;
     }
 
     @Override

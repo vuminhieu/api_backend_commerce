@@ -28,7 +28,7 @@ public class Category {
     @Column(name = "title", nullable = false, length = 250)
     private String title;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Image> images;
 

@@ -2,6 +2,9 @@ package com.example.backend_commerce.dto;
 
 import java.util.List;
 
+import lombok.Data;
+
+@Data
 public class CategoryDTO {
 
     private long id;

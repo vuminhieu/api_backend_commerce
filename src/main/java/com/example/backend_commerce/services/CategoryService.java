@@ -6,6 +6,7 @@ import com.example.backend_commerce.models.Image;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface CategoryService {
     Optional<Category> findCategoryById(Long id);
