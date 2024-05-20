@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/images")
+@RequestMapping("/admin/api/v1/images")
 public class ImageController {
 
     @Autowired

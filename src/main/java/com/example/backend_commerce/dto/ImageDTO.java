@@ -1,5 +1,8 @@
 package com.example.backend_commerce.dto;
 
+import lombok.Data;
+
+@Data
 public class ImageDTO {
 
     private long id;
