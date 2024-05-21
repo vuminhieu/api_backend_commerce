@@ -3,8 +3,7 @@ package com.example.backend_commerce.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -14,6 +13,8 @@ import java.util.Set;
 @Table(name = "products")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Product {
 
     @Id
@@ -50,7 +51,7 @@ public class Product {
     @Column(name = "status", nullable = false, length = 250)
     private String status;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Image> images;
 
@@ -74,6 +75,4 @@ public class Product {
         this.updated_at = updated_at;
     }
 
-    public Product() {
-    }
 }
