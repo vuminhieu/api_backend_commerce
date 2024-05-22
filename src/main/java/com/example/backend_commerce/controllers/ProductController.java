@@ -1,6 +1,7 @@
 package com.example.backend_commerce.controllers;
 
 import com.example.backend_commerce.dto.ProductDTO;
+import com.example.backend_commerce.dto.SearchRequestDTO;
 import com.example.backend_commerce.models.Product;
 import com.example.backend_commerce.services.ProductService;
 import com.example.backend_commerce.ultils.HandlesResponse;
@@ -51,5 +52,12 @@ public class ProductController {
         if (product != null) {
             productService.delete(product);
         }
+    }
+
+    @PostMapping("/search")
+    public List<Product> searchProducts(@RequestBody SearchRequestDTO searchRequest) {
+        return productService.searchProducts(searchRequest.getTitle(),
+                                             searchRequest.getVendor(), 
+                                             searchRequest.getCategory());
     }
 }
