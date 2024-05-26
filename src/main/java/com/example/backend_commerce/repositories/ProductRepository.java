@@ -13,7 +13,7 @@ import com.example.backend_commerce.models.Product;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     public Long countById(Long id);
 
-     @Query("SELECT p FROM products p WHERE " +
+     @Query("SELECT p FROM Product p WHERE " +
            "(:name IS NULL OR p.title LIKE %:title%) AND " +
            "(:vendor IS NULL OR p.vendor = :vendor) AND " +
            "(:category IS NULL OR :category MEMBER OF p.categories)")
