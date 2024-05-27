@@ -1,21 +1,20 @@
 package com.example.backend_commerce.services;
 
-import com.example.backend_commerce.dto.CategoryDTO;
-import com.example.backend_commerce.dto.ImageDTO;
-import com.example.backend_commerce.dto.ProductDTO;
-import com.example.backend_commerce.models.Category;
-import com.example.backend_commerce.models.Image;
-import com.example.backend_commerce.models.Product;
-import com.example.backend_commerce.repositories.ImageRepository;
-import com.example.backend_commerce.repositories.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.backend_commerce.dto.ImageDTO;
+import com.example.backend_commerce.dto.ProductDTO;
+import com.example.backend_commerce.models.Image;
+import com.example.backend_commerce.models.Product;
+import com.example.backend_commerce.repositories.ImageRepository;
+import com.example.backend_commerce.repositories.ProductRepository;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -211,5 +210,10 @@ public class ProductServiceImpl implements ProductService {
 
         productDTO.setImages(imageDTOs);
         return productDTO;
+    }
+
+    @Override
+    public List<Product> searchProducts(String title, String vendor, String category) {
+        return productRepo.searchProducts(title, vendor, category);
     }
 }
